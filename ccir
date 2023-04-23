@@ -1,0 +1,59 @@
+An Analysis of BERT models on SUPERGLUE benchmarks 
+Jason Yuan 
+, Crystal Springs Uplands School, 400 Uplands, Hillsborough , 94010, CA, USA. 
+Contributing authors: jyuan26@csus.org; 
+Abstract 
+In the past few years, the field of natural language processing has sprung up as a hot new topic in machine learning. New models and methods have driven continuous growth in this field, one of these models being BERT, introduced by Google in 2018. Since then, many iterations of BERT have emerged, all with unique roles and purposes. In this paper we analyze the strengths and weaknesses of these BERT variations using the SuperGLUE benchmark, ”a new benchmark styled after GLUE with a new set of more difficult language understanding tasks, a software toolkit, and a public leaderboard” [citation needed] 
+1 Introduction 
+Recently there have been many new BERT models, such as DistilBERT (https://arxiv.org/abs/1910.01108), Span BERT(2019) (https://arxiv.org/abs/1907.10529), TinyBERT (2019) (https://arxiv.org/abs/1909.10351), and so on. These models all build on the base BERT model in some way, and have their pros and cons. The SuperGLUE benchmark (2019) is a useful tool in determining which models are better suited in which areas, building on the GLUE benchmark created in 2018 (https://arxiv.org/abs/1804.07461). In this paper, we evaluate 4 BERT models (BERT base, ALBERT, RoBERTa, DistilBERT) on 4 SuperGLUE tasks (WiC, sts, MultiRC, BoolQ) to establish the strengths, weaknesses, similarities, and differences for each model. 
+1
+2 Selected Tasks 
+2.1 BoolQ 
+BoolQ(Boolean Questions) is a SuperGLUE task where a model is given a passage and a question relating to the passage and tries to answer either yes or no to the question. The questions come from anonymous ”users of the Google search engine, and afterwards paired with a paragraph from a Wikipedia article containing the answer.” The models are evaluated by their accuracy. 
+2.2 WiC 
+WiC(Words in Context) is the second SuperGLUE task. A model is given ”two text snippets and a polysemous word that appears in both sentences, the task is to deter mine whether the word is used with the same sense in both sentences. Sentences are drawn from WordNet (Miller, 1995), VerbNet (Schuler, 2005), and Wiktionary.” The model is evaluated with accuracy 
+2.3 MultiRC 
+MultiRC (Multi Sentence Reading Comprehension) is the last SuperGLUE task. It is ”a QA task where each example consists of a context paragraph, a question about that paragraph, and a list of possible answers. The system must predict which answers are true and which are false.” 
+2.4 STS 
+STS (Semantic Textual Similarity) is a GLUE task where a model is given sentence pairs and outputs a score ranging from 1 to 5 on how similar the sentences are, a lower score corresponding to low similarity and a higher score corresponding to high similarity. The sentence pairs were ”drawn from news headlines, video and image captions, and natural language inference data.” Models are evaluated using Pearson and Spearman correlation coefficients. 
+BoolQ was selected as a task in order to test a model’s ability to answer simple ques tions, WiC was selected to test how well a model represented words, MultiRC was selected to test a model’s ability to understand complex text, and STS was selected to test if a model could understand the meaning behind text and ultimately decide if texts were similar. 
+3 Selected Models 
+3.1 BERT base 
+BERT was first introduced in 2018 by Google researchers Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanov. It stands for Bidirectional Encoder Rep resentations from Transformers. BERT is unique from other models because of its 
+2
+property of ”bidirectionality”, meaning it can read simultaneously in both directions. BERT can account for all of the words in a sentence, allowing it to grasp a deeper meaning of a text. It is pre-trained on Masked Language Modeling and Next Sentence Prediction. BERT has achieved state of the art results on multiple natural language understanding tasks and is also used i n the SuperGLUE baselines. 
+3.2 DistilBERT 
+DistilBERT was introduced in 2019 in the paper ”DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter” by Victor SANH, Lysandre DEBUT, Julien CHAUMOND, Thomas WOLF at huggingface. The paper ”propose[d] a method to pre-train a smaller general purpose language representation model, called Distil BERT, which can then be fine tuned with good performances on a wide range of tasks like its larger counterparts.” The authors ”show that it is possible to reduce the size of a BERT model by 40%, while retaining 97% of its language understanding capa bilities and being 60% faster.” The model is smaller, faster, and cheaper than BERT while showing only a small drop in performance. 
+3.3 ALBERT 
+ALBERT, which stands for ”A Lite BERT” was introduced in the paper ”ALBERT: A LITE BERT FOR SELF-SUPERVISED LEARNING OF LANGUAGE REPRE SENTATIONS” written Zhenzhong Lan, Mingda Chen, Sebastian Goodman, Piyush Sharma, Radu Soricut, and Kevin Gimpel in 2019 from the Toyota Technological Insti tute at Chicago and Google Research. The issue ALBERT tries to solve is GPU/TPU restrictions and longer training times when increasing model size. The authors ”present two parameter reduction techniques to lower memory consumption and increase the training speed of BERT.” These techniques result in models that scale much better than BERT. 
+3.4 RoBERTA 
+RoBERTA was introduced before ALBERT in 2019 in the paper ”RoBERTa: ARo bustly Optimized BERT Pretraining Approach” by Yinhan Liu, Myle Ott. Naman Goyal, Jingfei Du, Mandar Joshi, Danqi Chen, Omer Levy, Mike Lewis, Luke Zettle moyer, and Veselin Stoyanov from Facebook AI and University of Washington. The authors ”present a replication study of BERT pretraining (Devlin et al., 2019) that carefully measures the impact of many key hyperparameters and training data size.” They reveal that BERT’s full potential had not been unlocked, and that different hyperparameter choices boost performance by a significant amount, so much so that ”BERT can match or exceed the performance of every model published after it.” 
+3.5 GPT-3 
+GPT-3 was also used to compare to the BERT models and was not fine-tuned 3
+BoolQ (test acc) MultiRC (val acc) WiC (test ACC) STS (train loss) BERT base 61.89 63.40 48.29 0.002 DistilBERT 68.44 64.21 48.57 0.03 ALBERT 61.89 64.08 48.29 0.002 RoBERTa 70.42 64.72 49.29 0.01 GPT-3 78.40 68.80 44.23 - 
+4 Results 
+The results for BoolQ were varied among the models, with the lowest accuracy being 62% and the highest being 78%. DistilBERT managed to perform better than BERT despite being a smaller, faster model. 
+In WiC, the models performed badly with all of them having a testing accuracy of less than 50%. However, during training the BERT models achieved an accuracy of 90% or higher by the 4th epoch. It is possible that the models overfit on train data. GPT-3 performed the worst, achieving a 44.23% accuracy. However, GPT-3 was evaluated on the training data, as it was not fine tuned and did not use the validation data. 
+In MultiRC, val accuracy was used in evaluating how well the models performed. GPT-3 performed the best with a 68.8% accuracy, with the scores differing very little among the BERT models. In training every BERT model, the validation accuracy went down with each of the 4 epochs, going from the high 60s to lower 60s. 
+[need to finish STS]The models’ performance on the STS benchmark was evaluated on train loss, as more work needs to be done to find the pearson and spearman corre lation of the testing. GPT-3 will be included once spearman and pearson correlation is completed for the BERT models. 
+5 Data 
+5.1 BoolQ 
+The models were fine-tuned on a Google Research Dataset for BoolQ published in May 2019. The data consisted of 3 jsonl files, one for train, test, and dev. The train dataset consisted of 9427 labeled training examples, the dev dataset consisted of 3270 labeled development examples, and the test dataset consisted of 3245 unlabeled test examples. 
+5.2 WiC 
+The dataset used for WiC was published in the paper by Mohammad Taher Pile hvar and Jose Camacho-Collados, ”WiC: the Word-in-Context Dataset for Evaluating Context-Sensitive Meaning Representations” and is used as part of the SuperGLUE benchmark. It is split up into 6 files, a train, dev, and test dataset with corresponding answer files. The train dataset consists of 5427 examples and the test dataset consists of 1400 examples. The dev dataset was not used. 
+4
+5.3 MultiRC 
+The dataset used for MultiRC was published by University of Pennsylvania and was used as part of the SuperGLUE benchmark. It consists of 3 .jsonl files, the entire corpus consisting of around 10,000 questions. Around 60% of this data is training/dev data. 
+5.4 STS 
+The dataset used for STS was published by Google Research, University of the Basque Country Donostia, George Washington University, and Sheffield University. It consists of 8628 sentence pairs coming from news, captions, and forums. 
+6 Conclusion 
+The different models performed similarly in the tasks, with RoBERTa and GPT-3 standing out in various tasks. DistilBERT performed better than BERT base while training it took about half of the time it took to train BERT. The rest of the BERT models needed similar times for training. GPT-3 performed very well even without any fine-tuning. 
+6.1 Sources of error 
+It is possible that the WiC training and testing was done incorrectly as the training accuracy of over 90% for most of the models did not match the under 50% accuracy on the training data, an accuracy worse than randomly guessing. A sequence classification model was used, which may not have been the correct model to use for WiC. For MultiRC, the training data was broken into a format of one passage, one question, and one answer with a label, the model having to decide whether the answer is correct or not. This classification model was then used in a predict function to compare probabilities of different options in the test dataset. This method is not the optimal method for this task, and the models’ performance likely decreased due to the use of this method. Lastly, for GPT-3’s BoolQ evaluation, it is possible that the GPT 3 model answered the question based on existing knowledge and not based on the passage, explaining its high performance. 
+7 References 
+Alex Wang, Amanpreet Singh, Julian Michael, Felix Hill, Omer Levy, Samuel R. Bowman (2018). GLUE: A Multi-Task Benchmark and Analysis Platform for Natural Language Understanding. CoRR, abs/1804.07461. 
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova. (2019). BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. Zhenzhong Lan, Mingda Chen, Sebastian Goodman, Kevin Gimpel, Piyush Sharma, Radu Soricut. (2020). ALBERT: A Lite BERT for Self-supervised Learning of Language Representations. 
+5
+Yinhan Liu, Myle Ott, Naman Goyal, Jingfei Du, Mandar Joshi, Danqi Chen, Omer Levy, Mike Lewis, Luke Zettlemoyer, Veselin Stoyanov. (2019). RoBERTa: A Robustly Optimized BERT Pretraining Approach. 
+Victor Sanh, Lysandre Debut, Julien Chaumond, Thomas Wolf. (2020). Distil BERT, a distilled version of BERT: smaller, faster, cheaper and lighter. 
+6
